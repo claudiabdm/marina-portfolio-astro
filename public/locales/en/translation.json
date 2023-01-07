@@ -3,5 +3,10 @@
   "bio": "bio",
   "drawings": "drawings",
   "photos": "photos",
-  "contact": "contact"
+  "contact": "contact",
+  "name": "name",
+  "email": "email",
+  "message": "message",
+  "writeMessage": "Write your message here...",
+  "send": "send"
 }

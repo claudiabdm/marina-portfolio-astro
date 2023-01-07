@@ -1,0 +1,68 @@
+---
+import i18next, { t } from "i18next";
+---
+
+<form class="form" method="POST" name="contact" data-netlify="true">
+  <label class="form__label" for="name">
+    {t("name", { lng: i18next.language })}
+    <input class="form__input" type="text" name="name" />
+  </label>
+
+  <label class="form__label" for="email">
+    {t("email", { lng: i18next.language })}
+    <input class="form__input" type="email" name="email" />
+  </label>
+
+  <label class="form__label" for="message">
+    {t("message", { lng: i18next.language })}
+    <textarea
+      class="form__input form__textarea"
+      name="message"
+      placeholder={t("writeMessage", { lng: i18next.language })}></textarea>
+  </label>
+
+  <button class="form__button" type="submit"
+    >{t("send", { lng: i18next.language })}</button
+  >
+</form>
+
+<style lang="scss">
+  .form {
+    display: flex;
+    flex-direction: column;
+    max-width: 32rem;
+    margin-top: var(--space-m);
+
+    &__label {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3xs);
+      margin-bottom: var(--space-xs);
+      text-transform: capitalize;
+    }
+    &__input {
+      padding: var(--space-3xs);
+      border: 1px solid var(--secondary);
+      border-radius: 2px;
+      &:hover:not(:focus) {
+        background-color: #f4f4f4;
+      }
+    }
+    &__textarea {
+      height: 12rem;
+      resize: none;
+    }
+    &__button {
+      width: 6rem;
+      border: none;
+      border-radius: 2px;
+      padding: var(--space-3xs);
+      color: #f4f4f4;
+      background-color: var(--tertiary);
+      text-transform: capitalize;
+      &:hover {
+        background-color: var(--primary);
+      }
+    }
+  }
+</style>

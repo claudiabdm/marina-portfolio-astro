@@ -37,6 +37,7 @@ export default defineConfig({
         entriesListLatest: "components/EntriesListLatest",
         entriesEntry: "components/EntriesEntry",
         entriesList: "components/EntriesList",
+        contactForm: "components/ContactForm",
       },
     }),
     astroI18next()

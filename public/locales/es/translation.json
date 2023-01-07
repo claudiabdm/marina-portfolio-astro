@@ -3,5 +3,10 @@
   "bio": "bio",
   "drawings": "dibujos",
   "photos": "fotos",
-  "contact": "contacto"
+  "contact": "contacto",
+  "name": "nombre",
+  "email": "email",
+  "message": "mensaje",
+  "writeMessage": "Escribe tu mensaje aquí...",
+  "send": "enviar"
 }
