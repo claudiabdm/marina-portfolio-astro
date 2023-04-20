@@ -8,5 +8,6 @@
   "email": "email",
   "message": "message",
   "writeMessage": "Write your message here...",
-  "send": "send"
+  "send": "send",
+  "successMessage": "Thank you, your message has been received!"
 }

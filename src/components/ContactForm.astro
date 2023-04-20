@@ -2,7 +2,50 @@
 import i18next, { t } from "i18next";
 ---
 
-<form class="form" method="POST" name="contact" data-netlify="true">
+<script is:inline type="module">
+  import A11yDialog from "https://cdn.jsdelivr.net/npm/a11y-dialog@^7.5.2/dist/a11y-dialog.esm.js";
+  const urlSearchParams = new URLSearchParams(window.location.pathname);
+  const isContactSuccess = urlSearchParams.has("/contact/success");
+  const dialog = new A11yDialog(document.getElementById("success-dialog"));
+
+  if (isContactSuccess) {
+    dialog.show();
+  } else {
+    dialog.hide();
+  }
+</script>
+<div id="success-dialog" aria-hidden="true" class="dialog">
+  <div class="dialog__overlay" data-a11y-dialog-hide></div>
+  <div class="dialog__main">
+    {t("successMessage", { lng: i18next.language })}
+    <button
+      type="button"
+      class="dialog__close"
+      aria-label="Close success message"
+    >
+      <svg
+        class="dialog__svg"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+<form
+  class="form"
+  method="POST"
+  name="contact"
+  data-netlify="true"
+  action="/contact/success"
+>
   <label class="form__label" for="name">
     {t("name", { lng: i18next.language })}
     <input class="form__input" type="text" name="name" />
@@ -10,7 +53,7 @@ import i18next, { t } from "i18next";
 
   <label class="form__label" for="email">
     {t("email", { lng: i18next.language })}
-    <input class="form__input" type="email" name="email" />
+    <input class="form__input" type="email" name="email" required />
   </label>
 
   <label class="form__label" for="message">
@@ -27,6 +70,53 @@ import i18next, { t } from "i18next";
 </form>
 
 <style lang="scss">
+  .dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0);
+
+    animation: fade-in 0.2s forwards;
+
+    @keyframes fade-in {
+      from {
+        background-color: rgba(0, 0, 0, 0);
+      }
+      to {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    &[aria-hidden="true"] {
+      display: none;
+    }
+
+    &,
+    &__overlay {
+      position: fixed;
+      inset: 0;
+      user-select: none;
+      z-index: 1;
+    }
+
+    &__main {
+      position: relative;
+      padding: var(--space-l) var(--space-l) var(--space-m);
+      background-color: #fff;
+      transform: translate3d(0, -20vh, 0);
+    }
+
+    &__close {
+      position: absolute;
+      top: 4px;
+      right: 2px;
+      width: 2rem;
+      height: 2rem;
+      background: none;
+      border: none;
+    }
+  }
+
   .form {
     display: flex;
     flex-direction: column;
