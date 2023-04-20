@@ -1,21 +1,94 @@
 ---
 import { useStoryblokApi } from "@storyblok/astro";
-import { getVersion } from "../utils/functions";
+import { getVersion, getYear } from "../utils/functions";
+import Link from "./Link.astro";
+import StoryblokImage from "./StoryblokImage.astro";
 
-const { blok: { numberOfEntries } } = Astro.props;
+const {
+  blok: { numberOfEntries },
+} = Astro.props;
 const storyblokApi = useStoryblokApi();
 
 // Get recent published entries
-const {
-  data: { stories },
-} = await storyblokApi.get(
-  `cdn/stories?sort_by=published_at:asc&filter_query[content][in]=Entries`,
+const { data } = await storyblokApi.get(
+  `cdn/stories?sort_by=published_at:desc`,
   {
     version: getVersion(),
   }
 );
+const stories = data.stories
+  .filter((s) => s.content?.entries?.length > 0)
+  .slice(0, numberOfEntries);
 ---
-<div>
-    latest
-    {numberOfEntries}
-</div>
+
+<ul class="linkList">
+  {
+    stories.map((s, i) => (
+      <li>
+        <Link href={`/${s.full_slug}`} className="linkList__link">
+          <StoryblokImage
+            aspectRatio="1/1"
+            blok={s.content.entries[0]}
+            preload={i < 3}
+            index={i}
+            style={{
+              objectFit: "cover",
+              objectPosition: "center center",
+              height: "250px",
+              margin: "auto",
+            }}
+            autoSize={false}
+          />
+          <div class="linkList__title">
+            {s.name} - {getYear(s.content.year)}
+          </div>
+        </Link>
+      </li>
+    ))
+  }
+</ul>
+
+<style lang="scss">
+  .linkList {
+    display: grid;
+    grid-template-rows: repeat(auto, 250px);
+    gap: var(--space-m);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    &__link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        z-index: 1;
+        transition: opacity 0.2s ease-out;
+      }
+      &:hover {
+        .linkList__title {
+          opacity: 1;
+        }
+        &::before {
+          opacity: 0.5;
+        }
+      }
+    }
+    &__title {
+      position: absolute;
+      padding: var(--space-3xs);
+      opacity: 0;
+      background-color: white;
+      color: var(--primary);
+      z-index: 2;
+      transition: opacity 0.2s ease-out;
+    }
+  }
+</style>
