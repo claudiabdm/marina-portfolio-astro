@@ -9,5 +9,6 @@
   "message": "mensaje",
   "writeMessage": "Escribe tu mensaje aquí...",
   "send": "enviar",
-  "successMessage": "¡Gracias, su mensaje ha sido recibido!"
+  "successMessage": "¡Gracias, su mensaje ha sido recibido!",
+  "contactMessage": "Please fill the form or send me an email to"
 }
